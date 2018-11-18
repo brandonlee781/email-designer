@@ -1,0 +1,54 @@
+<div 
+  [ngClass]="{ card: true, selected: selected }"
+  [ngStyle]="{ 'margin-bottom.px': component.marginBottom ? 16 : 0 }"
+>
+  <div class="card-body" (click)="onCardClick()">
+    <div *ngIf="selected" class="selected-icon">
+      <button mat-fab flat color="white" class="mat-elevation-z0">
+        <mat-icon color="primary">check</mat-icon>
+      </button>
+    </div>
+    <!-- IMG -->
+    <a *ngIf="showImage">
+      <img
+        width="100%"
+        height="auto"
+        [src]="component.image || 'https://via.placeholder.com/580x320'">
+    </a>
+    <!-- IMG -->
+  
+    <!-- CONTENT -->
+    <ed-email-text
+      *ngIf="component.options && component.options.includes('text')"
+      [title]="component.title"
+      [titleAlignment]="component.titleAlignment"
+      [titleCase]="component.titleCase"
+      [subtitle]="component.subtitle"
+      [text]="component.text"
+      [textAlignment]="component.textAlignment"
+      [paddingTop]="component.paddingTop"
+    ></ed-email-text>
+    <!-- CONTENT -->
+  
+    <!-- CTA -->
+    <ed-email-button
+      *ngIf="showButton"
+      [link]="component.link"
+      [text]="component.buttonText"
+      [paddingBottom]="component.paddingBottom"
+    ></ed-email-button>
+    <!-- CTA -->
+  </div>
+
+  <div class="card-actions">
+    <button mat-icon-button color="primary">
+      <mat-icon aria-label="Save Card">save</mat-icon>
+    </button>
+    <button mat-icon-button color="warn" (click)="onClickDelete()">
+      <mat-icon aria-label="Delete Card">delete</mat-icon>
+    </button>
+    <button mat-icon-button>
+      <mat-icon aria-label="Delete Card">more_vert</mat-icon>
+    </button>
+  </div>
+</div>

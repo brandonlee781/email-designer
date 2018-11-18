@@ -1,0 +1,17 @@
+<div class="inner" [ngStyle]="{ 'padding-top.px': paddingTop }">
+  <h4
+    class="title"
+    [ngStyle]="{ 'text-align': titleAlignment, 'text-transform': titleCase }"
+  >
+    {{ title || 'Lorem Ipsum' }}
+  </h4>
+  <h5
+    *ngIf="subtitle"
+    [ngStyle]="{ 'text-align': titleAlignment, 'text-transform': titleCase }"
+  >
+    {{ subtitle }}
+  </h5>
+  <p class="text" [ngStyle]="{ 'text-align': textAlignment }">
+    {{ text || 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce porta ullamcorper quam, ut interdum libero. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Sed rutrum tempus dui, non interdum ligula ultricies id. Vestibulum fringilla varius nisi vitae vehicula. Mauris lobortis imperdiet tempus. Aliquam ut tellus nulla. Praesent nec varius arcu. Aliquam rutrum consectetur velit ut placerat. Sed blandit aliquet magna ac malesuada. Etiam eu enim vitae nunc fringilla tristique. Proin id accumsan nulla, mollis semper dui. In luctus eu odio vel imperdiet.' }}
+  </p>
+</div>

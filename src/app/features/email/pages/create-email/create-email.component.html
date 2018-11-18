@@ -1,0 +1,48 @@
+<mat-sidenav-container>
+  <mat-sidenav
+    [opened]="navDrawerOpen$ | async"
+    (openedChange)="onNavDrawerChange($event)"
+    fixedInViewport
+    fixedTopGap="64"
+    [mode]="screenSize === 'desktop' ? 'side' : 'over'"
+    class="email-designer-sidenav"
+  >
+    <ed-email-nav-drawer></ed-email-nav-drawer>
+  </mat-sidenav>
+  
+  <mat-sidenav
+    [opened]="rightNavOpen"
+    fixedInViewport
+    fixedTopGap="64"
+    mode="side"
+    position="end"
+    class="email-designer-right-nav"
+  >
+    <ed-right-nav [selectedCard]="selectedComponent$ | async"></ed-right-nav>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    
+    <div
+      cdkDropList
+      #emailBuilder="cdkDropList"
+      [cdkDropListData]="currentComponents$ | async"
+      [cdkDropListConnectedTo]="[standardComponentList]"
+      (cdkDropListDropped)="drop($event)"
+      class="email-builder-content"
+      
+    >
+      <div class="cf-banner">
+        <img src="http://email.cityfirst.church/wp-content/uploads/2018/03/cfc-logo-white.png" alt="">
+      </div>
+      <div class="email-builder-list">
+        <ed-email-card
+          *ngFor="let comp of currentComponents$ | async; index as i;"
+          cdkDrag
+          [selected]="selectedId === comp.id"
+          [component]="comp"
+        ></ed-email-card>
+      </div>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

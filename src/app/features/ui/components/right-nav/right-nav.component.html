@@ -1,0 +1,150 @@
+<div class="selected-header">
+  <h4>
+    Selected Component
+  </h4>
+  <button mat-icon-button (click)="closeRightNav()">
+    <mat-icon aria-label="close">close</mat-icon>
+  </button>
+</div>
+
+<div *ngIf="selectedCard" class="selected-card-form" action="">
+  <mat-form-field class="full-width">
+    <input
+      matInput
+      placeholder="Image"
+      [(ngModel)]="selectedCard.image"
+      (keyup)="updateField.next({ field: 'image', value: $event.target.value })">
+    <mat-icon matSuffix (click)="toggleCardOption('image')" matTooltip="Toggle the cards image">
+      {{selectedCard.options && selectedCard.options.includes('image') ? 'visibility_off' : 'visibility'}}
+    </mat-icon>
+  </mat-form-field>
+
+  <div>
+    <mat-form-field class="full-width">
+      <input
+        matInput
+        placeholder="Title"
+        [(ngModel)]="selectedCard.title"
+        (keyup)="updateField.next({ field: 'title', value: $event.target.value })">
+      <mat-icon matSuffix (click)="toggleCardOption('text')" matTooltip="Toggle the cards text">
+        {{selectedCard.options && selectedCard.options.includes('text') ? 'visibility_off' : 'visibility'}}
+      </mat-icon>
+    </mat-form-field>
+  
+    <div class="row">
+      <mat-form-field class="form-field">
+        <mat-select
+          placeholder="Title Alignment"
+          [(ngModel)]="selectedCard.titleAlignment"
+          (selectionChange)="updateField.next({ field: 'titleAlignment', value: $event.value })"
+        >
+          <mat-option
+            *ngFor="let align of textAlignment"
+            [value]="align.key"
+          >
+            {{align.text}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    
+      <mat-form-field class="form-field">
+        <mat-select
+          placeholder="Title Style"
+          [(ngModel)]="selectedCard.titleCase"
+          (selectionChange)="updateField.next({ field: 'titleCase', value: $event.value })"
+        >
+          <mat-option
+            *ngFor="let case of textStyle"
+            [value]="case.key"
+          >
+            {{case.text}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <mat-form-field class="full-width">
+      <textarea
+        matInput
+        placeholder="Card Text"
+        [(ngModel)]="selectedCard.text"
+        rows="4"
+        (keyup)="updateField.next({ field: 'text', value: $event.target.value })"
+      ></textarea>
+    </mat-form-field>
+  
+    <mat-form-field class="full-width">
+      <mat-select
+        placeholder="Text Alignment"
+        [(ngModel)]="selectedCard.textAlignment"
+        (selectionChange)="updateField.next({ field: 'textAlignment', value: $event.value })"
+      >
+        <mat-option
+          *ngFor="let align of textAlignment"
+          [value]="align.key"
+        >
+          {{align.text}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div>
+    <mat-form-field class="full-width">
+      <input
+        matInput
+        placeholder="Button Text"
+        [(ngModel)]="selectedCard.buttonText"
+        (keyup)="updateField.next({ field: 'buttonText', value: $event.target.value })">
+      <mat-icon matSuffix (click)="toggleCardOption('button')" matTooltip="Toggle the cards button">
+        {{selectedCard.options && selectedCard.options.includes('text') ? 'visibility_off' : 'visibility'}}
+      </mat-icon>
+    </mat-form-field>
+  
+    <mat-form-field class="full-width">
+      <input
+        matInput
+        placeholder="Button URL"
+        [(ngModel)]="selectedCard.link"
+        (keyup)="updateField.next({ field: 'link', value: $event.target.value })">
+    </mat-form-field>
+  </div>
+
+  <div>
+    <b>Top Padding: </b><span>{{ selectedCard.paddingTop || 0 }}</span>
+    <mat-slider
+      class="full-width"
+      [value]="selectedCard.paddingTop"
+      min="0"
+      max="40"
+      (input)="updateField.next({ field: 'paddingTop', value: $event.value })"
+    ></mat-slider>
+  </div>
+
+  <div>
+    <b>Bottom Padding: </b><span>{{ selectedCard.paddingBottom || 0 }}</span>
+    <mat-slider
+      class="full-width"
+      [value]="selectedCard.paddingBottom"
+      min="0"
+      max="40"
+      (input)="updateField.next({ field: 'paddingBottom', value: $event.value })"
+    ></mat-slider>
+  </div>
+
+  <mat-slide-toggle
+    [checked]="selectedCard.marginBottom"
+    (change)="updateField.next({ field: 'marginBottom', value: $event.checked })"
+  >
+    Margin Below
+  </mat-slide-toggle>
+</div>
+
+<div class="selected-actions">
+  <button mat-button color="warn" (click)="deleteComponent()">
+    Remove
+  </button>
+  <button mat-raised-button color="primary" (click)="closeRightNav()">
+    Save
+  </button>
+</div>

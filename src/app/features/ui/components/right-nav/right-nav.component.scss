@@ -1,0 +1,34 @@
+.full-width {
+  width: 100%;
+}
+
+.row {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: space-between;
+  
+}
+
+.selected-header,
+.selected-actions {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  h4 {
+    margin-left: 8px;
+  }
+}
+
+.selected-actions {
+  justify-content: flex-end;
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+  border-bottom: none;
+}
+
+.selected-card-form {
+  padding: 16px;
+}

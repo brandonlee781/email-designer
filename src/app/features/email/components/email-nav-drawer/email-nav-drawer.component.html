@@ -1,0 +1,24 @@
+<div class="header">
+  <h4>Standard Components</h4>
+</div>
+<mat-grid-list
+  cols="2"
+  gutterSize="16px"
+  rowHeight="120px"
+  class="standard-grid-list"
+>
+  <mat-grid-tile
+    *ngFor="let comp of standardComponents$ | async"
+    (click)="onStandardTileClick(comp.options)"
+    class="standard-tile mat-elevation-z2"
+  >
+    <mat-icon>{{ comp.icon }}</mat-icon>
+    <span class="tile-text">
+      {{ comp.text }}
+    </span>
+  </mat-grid-tile>
+</mat-grid-list>
+
+<div class="header">
+  <h4>Saved Components</h4>
+</div>

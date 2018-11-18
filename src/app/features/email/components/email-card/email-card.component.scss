@@ -1,0 +1,36 @@
+@import '~@angular/material/theming';
+
+.card {
+  position: relative;
+  width: 100%;
+  background: #fff;
+  padding: 0;
+  cursor: pointer;
+
+  .card-actions {
+    position: absolute;
+    top: calc(50% - 60px);
+    right: -40px;
+    display: none;
+  }
+
+  &:hover {
+    @include mat-elevation(4);
+
+    .card-actions {
+      display: flex;
+      flex-flow: column nowrap;
+    }
+  }
+}
+
+.selected-icon {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+}
+
+.selected {
+  @include mat-elevation(8);
+  background: #eee;
+}

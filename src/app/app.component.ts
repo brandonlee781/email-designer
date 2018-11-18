@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Store } from '@ngxs/store';
+import { SetNavDrawer } from './features/ui/store';
 
 @Component({
   selector: 'ed-root',
@@ -7,4 +9,10 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'EmailDesigner';
+
+  constructor(private store: Store) {}
+
+  toggleNavDrawer() {
+    this.store.dispatch(new SetNavDrawer());
+  }
 }

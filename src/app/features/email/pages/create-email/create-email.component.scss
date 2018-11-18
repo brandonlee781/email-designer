@@ -1,0 +1,49 @@
+.email-builder-content{
+  // border: 1px solid black;
+  // margin-left: 260px;
+  background: #f3f3f3;
+  margin-top: 64px;
+  min-height: calc(100vh - 64px);
+}
+
+.header {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  h4 {
+    margin-left: 8px;
+  }
+}
+
+.cf-banner {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  width: 100%;
+  background: #222;
+  margin-bottom: 20px;
+  padding: 20px;
+
+  img {
+    height: 73px;
+    width: auto;
+    margin-left: -40px;
+  }
+}
+
+.email-builder-list {
+  max-width: 560px;
+  width: 100%;
+  margin: 0 auto;
+}
+.email-designer-sidenav {
+  width: 300px;
+  padding: 16px;
+}
+
+.email-designer-right-nav {
+  width: 400px;
+}
