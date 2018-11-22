@@ -1,0 +1,43 @@
+@import "variables";
+
+.search-bar {
+  background: $primary;
+  color: #fff;
+  padding: 8px 16px;
+
+  .search-box {
+    width: 100%;
+  }
+
+  .new-email-btn {
+    width: 160px;
+  }
+
+  ::ng-deep .mat-form-field-label-wrapper .mat-form-field-label {
+    color: #fff;
+  }
+  ::ng-deep .mat-form-field-underline {
+    background-color: #fff;
+    .mat-form-field-ripple {
+      background-color: #fff;
+    }
+  }
+
+  @media(min-width: 960px) {
+    width: 50%;
+    border-top-left-radius: 7.5px;
+    border-top-right-radius: 7.5px;
+    margin: 100px auto 0;
+  }
+}
+
+.email-list {
+  .mat-list {
+    padding-top: 0;
+  }
+
+  @media(min-width: 960px) {
+    width: 50%;
+    margin: 0 auto;
+  }
+}

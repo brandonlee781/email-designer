@@ -1,0 +1,47 @@
+<div class="location-link">
+  <h5><a [href]="'https://' + location?.website">{{ location?.website }}</a></h5>
+</div>
+
+<div id="social-links" fxLayout="row nowrap" fxLayoutAlign="">
+  <a class="button instagram" [href]="location?.instagram">
+    <img src="https://www.cityfirst.church/emailblasts/assets/instagram_ffffff_32.png" class="social-icon">
+    <span>Instagram</span>
+  </a>
+  <a class="button facebook" [href]="location?.facebook">
+    <img src="https://www.cityfirst.church/emailblasts/assets/facebook_ffffff_32.png" class="social-icon" alt="">
+    <span>Facebook</span>
+  </a>
+  <a class="button twitter" [href]="location?.twitter">
+    <img src="https://www.cityfirst.church/emailblasts/assets/twitter_ffffff_32.png" class="social-icon" alt="">
+    <span>Twitter</span>
+  </a>
+</div>
+
+<div class="card">
+  <div class="card-body">
+    <h5 class="footer-location">City First Church | {{ location?.name }}</h5>
+    <p fxLayout="column">
+      <span class="footer-link">
+        <img src="https://www.cityfirst.church/emailblasts/assets/map-marker_222222_32.png" class="info-icon" alt="">
+        <a [href]="location?.address.link">
+          {{ location?.address.display }}
+        </a>
+      </span>
+
+      <span class="footer-link">
+        <img src="https://www.cityfirst.church/emailblasts/assets/phone_222222_32.png" class="info-icon" alt="">
+        <a [href]="'tel:' + location?.phone">{{ location?.phone }}</a>
+      </span>
+
+      <span class="footer-link">
+        <img src="https://www.cityfirst.church/emailblasts/assets/send_222222_32.png" class="info-icon" alt="">
+        <a [href]="'mailto:' + location?.email">{{ location?.email }}</a>
+      </span>
+
+      <span class="footer-link">
+        <img src="https://www.cityfirst.church/emailblasts/assets/globe_222222_32.png" class="info-icon" alt="">
+        <a [href]="'https://' + location?.website">{{ location?.website }}</a>
+      </span>
+    </p>
+  </div>
+</div>

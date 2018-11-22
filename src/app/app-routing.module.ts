@@ -1,12 +1,17 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { CreateEmailComponent } from './features/email/pages/create-email/create-email.component';
+import { ListEmailComponent } from './features/email/pages/list-email/list-email.component';
 
 const routes: Routes = [
   {
-    path: 'email',
+    path: '',
+    component: ListEmailComponent,
+  },
+  {
+    path: 'email/:id',
     component: CreateEmailComponent,
-  }
+  },
 ];
 
 @NgModule({

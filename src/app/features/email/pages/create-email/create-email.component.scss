@@ -1,9 +1,17 @@
 .email-builder-content{
+  position: relative;
   // border: 1px solid black;
   // margin-left: 260px;
   background: #f3f3f3;
-  margin-top: 64px;
+  padding-bottom: 32px;
   min-height: calc(100vh - 64px);
+
+  .email-fab {
+    position: fixed;
+    bottom: 32px;
+    transition: right 0.25s ease;
+    // right: 16px;
+  }
 }
 
 .header {

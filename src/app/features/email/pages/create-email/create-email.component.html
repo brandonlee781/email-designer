@@ -7,22 +7,21 @@
     [mode]="screenSize === 'desktop' ? 'side' : 'over'"
     class="email-designer-sidenav"
   >
-    <ed-email-nav-drawer></ed-email-nav-drawer>
+    <ed-email-nav-drawer [email]="email$ | async"></ed-email-nav-drawer>
   </mat-sidenav>
   
   <mat-sidenav
-    [opened]="rightNavOpen"
+    [opened]="selectedComponent$ | async"
     fixedInViewport
     fixedTopGap="64"
     mode="side"
     position="end"
     class="email-designer-right-nav"
   >
-    <ed-right-nav [selectedCard]="selectedComponent$ | async"></ed-right-nav>
+    <ed-email-edit-drawer [selectedCard]="selectedComponent$ | async"></ed-email-edit-drawer>
   </mat-sidenav>
 
   <mat-sidenav-content>
-    
     <div
       cdkDropList
       #emailBuilder="cdkDropList"
@@ -39,10 +38,15 @@
         <ed-email-card
           *ngFor="let comp of currentComponents$ | async; index as i;"
           cdkDrag
-          [selected]="selectedId === comp.id"
           [component]="comp"
         ></ed-email-card>
+        <ed-email-footer-card [location]="(email$ | async).location"></ed-email-footer-card>
       </div>
+      <ed-email-speed-dial
+        class="email-fab"
+        [ngStyle]="{ right: (selectedComponent$ | async) ? '416px' : '16px' }"
+      >
+      </ed-email-speed-dial>
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>

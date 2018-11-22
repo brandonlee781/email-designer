@@ -1,0 +1,30 @@
+<div class="header">
+  {{ header }}
+</div>
+
+<div class="content">
+  <mat-form-field class="text-area">
+    <textarea matInput rows="8" [value]="content"></textarea>
+  </mat-form-field>
+</div>
+
+<div class="actions" fxLayout="row" fxLayoutAlign="flex-end center">
+  <button
+    mat-button
+    [ngClass]="{ primary: !copySuccess, success: copySuccess, warn: copyError }"
+    ngxClipboard
+    [cbContent]="content"
+    (cbOnSuccess)="copySuccess = true"
+    (cbOnError)="copyError = true"
+  >
+    <span *ngIf="!copySuccess && !copyError">Copy</span>
+    <span *ngIf="copySuccess" fxLayout="row" fxLayoutAlign="center center">
+      <mat-icon>check</mat-icon>
+      Copied
+    </span>
+    <span *ngIf="copyError" fxLayout="row" fxLayoutAlign="center center">
+        <mat-icon>warning</mat-icon>
+        Whoops
+      </span>
+  </button>
+</div>

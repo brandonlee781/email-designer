@@ -18,13 +18,18 @@ $iconSize: 40px;
   margin: 0 auto;
 }
 
-.standard-tile {
+.standard-tile,
+.saved-tile {
   border: 1px solid rgba(0, 0, 0, 0.12);
   border-radius: 5px;
   cursor: pointer;
 
   &:hover {
     @include mat-elevation(4);
+
+    .delete-saved-card {
+      display: flex;
+    }
   }
 
   ::ng-deep .mat-figure {
@@ -46,4 +51,57 @@ $iconSize: 40px;
       font-weight: bold;
     }
   }
+
+  .delete-saved-card {
+    position: absolute;
+    display: none;
+    top: 4px;
+    right: 4px;
+    height: 24px;
+    width: 24px;
+    line-height: 24px;
+    
+    .mat-icon {
+      height: 24px;
+      width: 24px;
+      font-size: 24px;
+    }
+  }
+}
+
+.saved-tile {
+  ::ng-deep .mat-figure {
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: flex-end; 
+  }
+
+  .tile-text {
+    box-sizing: border-box;
+    width: 100%;
+    height: 30%;
+    overflow: hidden;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 2px 4px;
+    color: white;
+    text-align: left;
+    text-shadow:
+      -1px -1px 0 #000,
+      1px -1px 0 #000,
+      -1px 1px 0 #000,
+      1px 1px 0 #000; 
+  }
+}
+
+.save-email-button {
+  width: calc(100% - 12px);
+  margin-left: 8px;
+  margin-bottom: 16px;
+}
+
+.name-input,
+.date-input,
+.location-select {
+  padding: 0 8px;
+  width: calc(100% - 12px);
 }

@@ -12,7 +12,10 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatSelectModule} from '@angular/material/select';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatTooltipModule} from '@angular/material/tooltip';
-
+import {MatMenuModule} from '@angular/material/menu';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material';
+import {MatDialogModule} from '@angular/material/dialog';
 
 @NgModule({
   imports: [
@@ -29,6 +32,10 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     MatSelectModule,
     MatGridListModule,
     MatTooltipModule,
+    MatMenuModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatDialogModule,
   ],
   exports: [
     DragDropModule,
@@ -43,6 +50,10 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     MatSelectModule,
     MatGridListModule,
     MatTooltipModule,
+    MatMenuModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatDialogModule,
   ],
   declarations: []
 })

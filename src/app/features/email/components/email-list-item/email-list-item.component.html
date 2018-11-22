@@ -1,0 +1,31 @@
+<mat-list-item  fxLayout="row">
+  <a
+    class="email-link"
+    [routerLink]="['/email', email.id]" routerLinkActive="router-link-active"
+    fxLayout="row" fxLayoutAlign="flex-start center"
+  >
+    <span>{{ email.location.id | uppercase }}- </span>
+    <span>{{ email.name }}</span>
+    <span class="caption">{{ email.sendDate }}</span>
+  </a>
+  <div class="email-actions" fxLayout="row">
+    <button
+      mat-icon-button
+      color="primary"
+      class="copy-btn"
+      matTooltip="Copy Email"
+      (click)="onClickCopy()"
+    >
+      <mat-icon aria-label="Copy Email">file_copy</mat-icon>
+    </button>
+    <button 
+      mat-icon-button 
+      color="warn"
+      matTooltip="Delete Email"
+      class="delete-btn"
+      (click)="onClickDelete()"
+    >
+      <mat-icon aria-label="Delete Email">delete</mat-icon>
+    </button>
+  </div>
+</mat-list-item>

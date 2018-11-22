@@ -1,7 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { CustomComponent } from '../../store/email.types';
-import { Store } from '@ngxs/store';
-import { SelectComponent, DeleteComponent } from '../../store';
+import { EmailCard, EmailCardService, EmailCardQuery } from '../../state/email-card';
+import { ID } from '@datorama/akita';
+import { Observable } from 'rxjs';
+import { SavedCardService } from '../../state/saved-card';
 
 @Component({
   selector: 'ed-email-card',
@@ -9,35 +10,31 @@ import { SelectComponent, DeleteComponent } from '../../store';
   styleUrls: ['./email-card.component.scss']
 })
 export class EmailCardComponent implements OnInit {
-  @Input() component: CustomComponent;
-  @Input() selected: boolean;
+  @Input() component: EmailCard;
+  activeId$: Observable<ID> = this.emailQuery.selectActiveId();
 
-  showImage = false;
-  showButton = false;
-  showText = false;
+  constructor(
+    private emailCardService: EmailCardService,
+    private emailQuery: EmailCardQuery,
+    private savedCardService: SavedCardService,
+  ) {}
 
-  constructor(private store: Store) {}
+  ngOnInit() {}
 
-  ngOnInit() {
-    if (this.component.options.indexOf('button') >= 0) {
-      this.showButton = true;
+  onCardClick(e) {
+    if (e.target.className !== 'mat-icon mat-black material-icons') {
+      this.emailCardService.selectCard(this.component.id);
     }
-    if (this.component.options.indexOf('text') >= 0) {
-      this.showText = true;
-    }
-    if (this.component.options.indexOf('image') >= 0) {
-      this.showImage = true;
-    }
-  }
-
-  onCardClick() {
-    this.store.dispatch(new SelectComponent(this.component.id));
   }
 
   onClickDelete() {
     if (confirm('Are you sure you want to remove this card?')) {
-      this.store.dispatch(new DeleteComponent(this.component.id));
+      this.emailCardService.deleteCard(this.component.id);
     }
+  }
+
+  onClickSave() {
+    this.savedCardService.saveCard(this.component);
   }
 
 }

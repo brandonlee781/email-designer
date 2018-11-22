@@ -1,3 +1,36 @@
+<mat-form-field class="name-input">
+  <input
+    matInput
+    placeholder="Email Name"
+    [value]="email.name"
+    (keyup)="onNameChange($event.target.value)"
+  >
+</mat-form-field>
+
+<mat-form-field class="date-input">
+  <input
+    matInput
+    [matDatepicker]="myDatepicker"
+    placeholder="Send Date"
+    [value]="sendDate"
+    (dateChange)="onDateChange($event)"
+  >
+  <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
+  <mat-datepicker #myDatepicker></mat-datepicker>
+</mat-form-field>
+
+<mat-form-field class="location-select">
+  <mat-select
+    placeholder="Email Location"
+    [value]="email.location?.id"
+    (selectionChange)="selectLocation($event)"
+  >
+    <mat-option *ngFor="let location of locations$ | async" [value]="location?.id">
+      {{location?.name}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+
 <div class="header">
   <h4>Standard Components</h4>
 </div>
@@ -8,7 +41,7 @@
   class="standard-grid-list"
 >
   <mat-grid-tile
-    *ngFor="let comp of standardComponents$ | async"
+    *ngFor="let comp of defaultCards"
     (click)="onStandardTileClick(comp.options)"
     class="standard-tile mat-elevation-z2"
   >
@@ -22,3 +55,32 @@
 <div class="header">
   <h4>Saved Components</h4>
 </div>
+<mat-grid-list
+  cols="2"
+  gutterSize="16px"
+  rowHeight="120px"
+  class="standard-grid-list"
+>
+  <mat-grid-tile
+    *ngFor="let comp of savedCards$ | async"
+    (click)="onSavedTileClick(comp, $event)"
+    class="saved-tile mat-elevation-z2"
+    [ngStyle]="{ 
+      'background': 'url('+ comp.image +')',
+      'background-position': 'center',
+      'background-size': 'auto 100%',
+      'background-repeat': 'no-repeat'
+    }"
+  >
+    <button
+      mat-icon-button
+      class="delete-saved-card"
+      (click)="deleteSavedCard(comp.id)"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+    <span class="tile-text">
+      {{ comp.title }}
+    </span>
+  </mat-grid-tile>
+</mat-grid-list>

@@ -1,0 +1,37 @@
+@import 'variables';
+
+.header {
+  height: 40px;
+  padding: 16px;
+  color: #fff;
+  background-color: $primary;
+  font-size: 32px;
+}
+
+.content {
+  padding: 16px 16px 0 16px;
+
+  .text-area {
+    width: 100%;
+  }
+}
+
+.actions {
+  width: 100%;
+  padding: 0 16px 16px 16px;
+}
+
+.primary {
+  color: $primary;
+  // background: $primary;
+}
+
+.success {
+  color: #fff;
+  background: #00992e;
+}
+
+.warn {
+  color: #fff !important;
+  background: $warn !important;
+}

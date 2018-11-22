@@ -1,0 +1,22 @@
+<div
+  class="fab-container"
+  (mouseenter)="onToggleFab()"
+  (mouseleave)="onToggleFab()"
+>
+  <button mat-fab class="fab-toggler">
+    <i class="material-icons">add</i>
+  </button>
+  <div>
+    <button
+      *ngFor="let btn of buttons"
+      mat-mini-fab
+      class="fab-secondary"
+      [matTooltip]="btn.tooltip"
+      matTooltipPosition="left"
+      color="secondary"
+      (click)="onItemClick(btn.action)"
+    >
+      <i class="material-icons">{{btn.icon}}</i>
+    </button>
+  </div>
+</div>

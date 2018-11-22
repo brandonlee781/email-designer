@@ -1,18 +1,15 @@
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Select, Store } from '@ngxs/store';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { ID } from '@datorama/akita';
 import { Observable, Subscription } from 'rxjs';
+import { BreakpointService, ScreenSize } from 'src/app/features/email/services/breakpoint.service';
+import { LocationQuery, LocationService } from 'src/app/features/location/state';
 
-import {
-  AddComponent,
-  CustomComponent,
-  EmailState,
-  SelectComponent,
-  StandardComponent
-} from '../../store';
-import { BreakpointService, ScreenSize } from 'src/app/features/ui/services/breakpoint.service';
-import { UiState } from 'src/app/features/ui/store/ui.state';
-import { SetNavDrawer } from 'src/app/features/ui/store';
+import { Email, EmailQuery, EmailService, EmailStore } from '../../state/email';
+import { EmailCard, EmailCardQuery, EmailCardService } from '../../state/email-card';
+import { MatDialog, MatDialogRef } from '@angular/material';
+import { EmailDialogComponent } from '../../components/email-dialog/email-dialog.component';
 
 
 @Component({
@@ -21,73 +18,98 @@ import { SetNavDrawer } from 'src/app/features/ui/store';
   styleUrls: ['./create-email.component.scss'],
 })
 export class CreateEmailComponent implements OnInit, OnDestroy {
-  @Select(EmailState.getStandardComponents) standardComponents$: Observable<StandardComponent>;
-  @Select(EmailState.getCurrentComponents) currentComponents$: Observable<CustomComponent>;
-  @Select(EmailState.getSelectedComponent) selectedComponent$: Observable<CustomComponent>;
-  @Select(UiState.getNavDrawerOpen) navDrawerOpen$: Observable<boolean>;
+  id: ID;
+  email$: Observable<Email> = this.emailQuery.selectActive();
+  currentComponents$: Observable<EmailCard[]>;
+  selectedComponent$ = this.emailCardQuery.selectActive();
+  selectedLocation$ = this.locationQuery.selectActive();
+  navDrawerOpen$: Observable<Boolean> =  this.emailCardQuery.isNavDrawerOpen$;
 
   breakpointSubscription: Subscription;
+  routerSubscription: Subscription;
   selectedComponentSubscription: Subscription;
 
   rightNavOpen = false;
   selectedId: string;
   screenSize: ScreenSize;
 
-  constructor(private store: Store, private breakpointService: BreakpointService) {
-    this.selectedComponentSubscription = this.selectedComponent$
-      .subscribe(comp => {
-        this.rightNavOpen = comp.id ? true : false;
-        this.selectedId = comp.id;
-      });
+  constructor(
+    private emailStore: EmailStore,
+    private emailService: EmailService,
+    private emailQuery: EmailQuery,
+    private emailCardQuery: EmailCardQuery,
+    private emailCardService: EmailCardService,
+    private locationQuery: LocationQuery,
+    private locationService: LocationService,
+    private breakpointService: BreakpointService,
+    private route: ActivatedRoute,
+    public dialog: MatDialog,
+  ) {
     this.breakpointSubscription = this.breakpointService
       .screenSize$
       .subscribe(size => {
         this.screenSize = size;
       });
+    this.emailQuery.select(store => store.ui)
+      .subscribe(dialogData => {
+        if (dialogData.dialogOpen) {
+          const dialogRef = this.dialog.open(EmailDialogComponent, {
+            width: '550px',
+            panelClass: 'email-dialog',
+            data: { type: dialogData.dialogType },
+          });
+
+          dialogRef.afterClosed().subscribe(result => {
+            this.emailStore.updateEmailDialog(false, '');
+          });
+        }
+      });
   }
 
   ngOnInit() {
+    this.routerSubscription = this.route.params.subscribe(params => {
+      this.id = params.id;
+      this.emailService.selectEmail(this.id);
+      this.currentComponents$ = this.emailCardQuery.selectEmailsCards(this.id);
+      this.locationService.selectLocation(this.emailQuery.getActive().location.id);
+    });
+    this.locationService.get();
   }
 
-  drop(event: CdkDragDrop<StandardComponent[]>) {
-    if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    } else {
-      const customComponent: CustomComponent = Object.assign(
-        {},
-        event.previousContainer.data[event.previousIndex],
-        {
-          paddingTop: 20,
-          paddingBottom: 0,
-          text: null,
-          marginBottom: true,
-          titleAlignment: 'center',
-          textAlignment: 'center',
-          titleCase: 'uppercase'
-        }
-      );
-      this.store.dispatch(new AddComponent(customComponent));
-    }
-  }
-
-  onCardClick(id) {
-    if (this.selectedId) {
-      if (this.selectedId !== id) {
-        this.store.dispatch(new SelectComponent(id));
-      } else {
-        this.store.dispatch(new SelectComponent());
-      }
-    } else {
-      this.store.dispatch(new SelectComponent(id));
-    }
+  drop(event: CdkDragDrop<EmailCard[]>) {
+    const payload = {
+      id: event.container.data[event.previousIndex],
+      previousIndex: event.previousIndex,
+      nextIndex: event.currentIndex,
+    };
+    // this.emailService.moveCard(payload);
+    // if (event.previousContainer === event.container) {
+    //   moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    // } else {
+    //   const customComponent: CustomComponent = Object.assign(
+    //     {},
+    //     event.previousContainer.data[event.previousIndex],
+    //     {
+    //       paddingTop: 20,
+    //       paddingBottom: 0,
+    //       text: null,
+    //       marginBottom: true,
+    //       titleAlignment: 'center',
+    //       textAlignment: 'center',
+    //       titleCase: 'uppercase'
+    //     }
+    //   );
+    //   this.store.dispatch(new AddComponent(customComponent));
+    // }
   }
 
   onNavDrawerChange(e) {
-    this.store.dispatch(new SetNavDrawer(e));
+    this.emailCardService.updateNavDrawer(e);
   }
 
   ngOnDestroy() {
     this.breakpointSubscription.unsubscribe();
-    this.selectedComponentSubscription.unsubscribe();
+    this.emailService.selectEmail(null);
+    this.routerSubscription.unsubscribe();
   }
 }

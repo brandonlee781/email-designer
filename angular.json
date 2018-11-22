@@ -30,6 +30,11 @@
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.scss"
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src/styles"
+              ]
+            },
             "scripts": []
           },
           "configurations": {
@@ -49,6 +54,14 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true
+            },
+            "hmr": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.hmr.ts"
+                }
+              ]
             }
           }
         },
@@ -60,6 +73,10 @@
           "configurations": {
             "production": {
               "browserTarget": "EmailDesigner:build:production"
+            },
+            "hmr": {
+              "hmr": true,
+              "browserTarget": "EmailDesigner:build:hmr"
             }
           }
         },
@@ -80,6 +97,11 @@
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.scss"
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src/styles"
+              ]
+            },
             "scripts": [],
             "assets": [
               "src/favicon.ico",

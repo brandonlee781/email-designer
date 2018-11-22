@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngxs/store';
-import { SetNavDrawer } from './features/ui/store';
+import { EmailCardService } from './features/email/state/email-card';
 
 @Component({
   selector: 'ed-root',
@@ -10,9 +10,10 @@ import { SetNavDrawer } from './features/ui/store';
 export class AppComponent {
   title = 'EmailDesigner';
 
-  constructor(private store: Store) {}
+  constructor(private emailService: EmailCardService) {}
 
   toggleNavDrawer() {
-    this.store.dispatch(new SetNavDrawer());
+    this.emailService.updateNavDrawer(undefined);
+    // this.store.dispatch(new SetNavDrawer());
   }
 }
