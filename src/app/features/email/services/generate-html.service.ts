@@ -7,6 +7,7 @@ import { EmailQuery } from '../state/email';
 import { BehaviorSubject, Subject, throwError, of, timer } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { mergeMap, retry, map, retryWhen, tap, delayWhen } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 export interface MinifierResponse {
   html: string;
@@ -44,11 +45,11 @@ export class GenerateHtmlService {
     const html = this.generateDocument(content);
     const text = this.generateText(cards);
 
-    this.http.post('http://localhost:3000', { html: html })
+    this.http.post(environment.inlinerUrl, { html })
       .subscribe({
         next: (data: MinifierResponse) => {
           this.html.next({
-            html: data.html.replace(/\\/g, ''),
+            html: data.html,
             text,
           });
         },

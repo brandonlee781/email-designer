@@ -12,7 +12,8 @@ export const environment = {
     projectId: 'email-designer-5aa67',
     storageBucket: 'email-designer-5aa67.appspot.com',
     messagingSenderId: '778482168820'
-  }
+  },
+  inlinerUrl: 'https://us-central1-email-designer-5aa67.cloudfunctions.net/htmlInliner',
 };
 
 /*
