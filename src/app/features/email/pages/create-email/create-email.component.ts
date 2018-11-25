@@ -10,6 +10,7 @@ import { Email, EmailQuery, EmailService, EmailStore } from '../../state/email';
 import { EmailCard, EmailCardQuery, EmailCardService } from '../../state/email-card';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { EmailDialogComponent } from '../../components/email-dialog/email-dialog.component';
+import { GenerateHtmlService } from '../../services/generate-html.service';
 
 
 @Component({
@@ -52,7 +53,7 @@ export class CreateEmailComponent implements OnInit, OnDestroy {
       });
     this.emailQuery.select(store => store.ui)
       .subscribe(dialogData => {
-        if (dialogData.dialogOpen) {
+        if (dialogData.dialogOpen && !this.dialog.openDialogs.length) {
           const dialogRef = this.dialog.open(EmailDialogComponent, {
             width: '550px',
             panelClass: 'email-dialog',
