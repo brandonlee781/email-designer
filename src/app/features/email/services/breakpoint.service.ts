@@ -17,23 +17,24 @@ export class BreakpointService {
       .observe([Breakpoints.Handset, Breakpoints.Tablet, Breakpoints.Web])
       .subscribe((state: BreakpointState) => {
         let currentSize: ScreenSize;
-        switch (true) {
-          case state.breakpoints['(max-width: 599px) and (orientation: portrait)']:
-          case state.breakpoints['(max-width: 959px) and (orientation: landscape)']:
-            currentSize = 'mobile';
-            break;
-          case state.breakpoints['(min-width: 600px) and (max-width: 839px) and (orientation: portrait)']:
-          case state.breakpoints['(min-width: 840px) and (orientation: portrait)']:
-            currentSize = 'tablet';
-            break;
-          case state.breakpoints['(min-width: 960px) and (max-width: 1279px) and (orientation: landscape)']:
-          case state.breakpoints['(min-width: 1280px) and (orientation: landscape)']:
-            currentSize = 'desktop';
-            break;
-          default:
-            currentSize = 'mobile';
-            break;
+
+        if (
+          state.breakpoints['(max-width: 599.99px) and (orientation: portrait)'] ||
+          state.breakpoints['(max-width: 959.99px) and (orientation: landscape)']
+        ) {
+          currentSize = 'mobile';
+        } else if (
+          state.breakpoints['(min-width: 600px) and (max-width: 839.99px) and (orientation: portrait)'] ||
+          state.breakpoints['(min-width: 840px) and (orientation: portrait)']
+        ) {
+          currentSize = 'tablet';
+        } else if (
+          state.breakpoints['(min-width: 960px) and (max-width: 1279.99px) and (orientation: landscape)'] ||
+          state.breakpoints['(min-width: 1280px) and (orientation: landscape)']
+        ) {
+          currentSize = 'desktop';
         }
+
         this.screenSize.next(currentSize);
       });
   }
