@@ -16,6 +16,15 @@
     <span>Home</span>
     <mat-icon>home</mat-icon>
   </button>
+  
+  <button *ngIf="(user$ | async)?.uid" class="profile" mat-mini-fab [matMenuTriggerFor]="profileMenu">
+    <img [src]="(user$ |async)?.photoURL" alt="">
+  </button>
+
+  <mat-menu #profileMenu="matMenu">
+    <button mat-menu-item (click)="authService.signOut()">Log Out</button>
+  </mat-menu>
+    
 </mat-toolbar>
 
 <div class="app-content">

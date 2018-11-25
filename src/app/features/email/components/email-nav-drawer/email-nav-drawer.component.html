@@ -3,7 +3,7 @@
     matInput
     placeholder="Email Name"
     [value]="email.name"
-    (keyup)="onNameChange($event.target.value)"
+    (keyup)="updateName.next($event.target.value)"
   >
 </mat-form-field>
 

@@ -1,0 +1,19 @@
+<div fxLayout="row" fxLayoutAlign="center center">
+    <div fxLayout="column" fxLayoutAlign="center center" style="height: 80vh">
+        <mat-card class="kt-login-card">
+            <form [formGroup]="form">
+                <mat-card-title>
+                    Login
+                </mat-card-title>
+                <mat-card-subtitle>
+                    Admin Login View
+                </mat-card-subtitle>
+                <mat-card-actions class="kt-card-actions" fxLayout="row" fxLayoutAlign="center center">
+                    <button mat-raised-button color="primary" (click)="authentication.googleLogin()">
+                        <mat-icon>account_circle</mat-icon> Connect Google
+                    </button>
+                </mat-card-actions>
+            </form>
+        </mat-card>
+    </div>
+</div>

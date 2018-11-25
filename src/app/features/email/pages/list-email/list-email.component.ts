@@ -26,8 +26,7 @@ export class ListEmailComponent implements OnInit {
   }
 
   onCreateClick() {
-    const email = this.emailService.addEmail();
-    this.router.navigate(['/email', email.id]);
+    this.emailService.addEmail();
   }
 
 }

@@ -6,35 +6,53 @@ import { createEmailCard, EmailCard } from './email-card.model';
 import { EmailCardQuery } from './email-card.query';
 import * as shortid from 'shortid';
 import { Email } from '../email/email.model';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 
 @Injectable({ providedIn: 'root' })
 export class EmailCardService {
+  cardCollection: AngularFirestoreCollection<EmailCard>;
 
-  constructor(private emailCardStore: EmailCardStore, private emailCardQuery: EmailCardQuery) {
+  constructor(
+    private emailCardStore: EmailCardStore,
+    private emailCardQuery: EmailCardQuery,
+    private afs: AngularFirestore,
+  ) {
+    this.cardCollection = afs.collection<EmailCard>('email-cards');
+    this.get();
   }
 
   get() {
-    // this.http.get().subscribe((entities: ServerResponse) => {
-      // this.emailCardStore.set(entities);
-    // });
+    this.cardCollection
+      .valueChanges()
+      .subscribe((cards: EmailCard[]) => {
+        this.emailCardStore.set(cards);
+      });
   }
 
   addCard(card, email: Email) {
-    if (card.id) {
-      const newCard = Object.assign({}, card, {
-        id: shortid.generate(),
-        emailId: email.id,
-      });
-      this.emailCardStore.add(newCard);
+    const id = this.afs.createId();
+    const newCard = createEmailCard({
+      ...card,
+      id,
+      emailId: email.id,
+    });
 
-    } else {
-      card.emailId = email.id;
-      this.emailCardStore.add(createEmailCard(card));
-    }
+    this.cardCollection.doc(id).set(newCard)
+      .then(res => {
+        this.emailCardStore.add(newCard);
+      })
+      .catch(err => console.error(err));
   }
 
   modifyCard(field, value) {
-    this.emailCardStore.updateActive(e => ({ [field]: value }));
+    const cardId = this.emailCardQuery.getActiveId();
+
+    this.cardCollection.doc(cardId.toString())
+      .update({ [field]: value })
+      .then(res => {
+        this.emailCardStore.updateActive(e => ({ [field]: value }));
+      })
+      .catch(err => console.error(err));
   }
 
   moveCard({ id, previousIndex, nextIndex }) {
@@ -52,7 +70,11 @@ export class EmailCardService {
   }
 
   deleteCard(id: ID) {
-    this.emailCardStore.remove(id);
+    this.cardCollection.doc(id.toString()).delete()
+      .then(res => {
+        this.emailCardStore.remove(id);
+      })
+      .catch(err => console.error(err));
   }
 
   updateNavDrawer(state) {

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Store } from '@ngxs/store';
 import { EmailCardService } from './features/email/state/email-card';
 import { Location } from '@angular/common';
+import { AuthenticationService } from './core/auth/services/authentication.service';
 
 @Component({
   selector: 'ed-root',
@@ -10,15 +11,16 @@ import { Location } from '@angular/common';
 })
 export class AppComponent {
   title = 'EmailDesigner';
+  user$ = this.authService.user;
 
   constructor(
     private emailService: EmailCardService,
     private location: Location,
-  ) { }
+    private authService: AuthenticationService,
+  ) {}
 
   toggleNavDrawer() {
     this.emailService.updateNavDrawer(undefined);
-    // this.store.dispatch(new SetNavDrawer());
   }
 
   isEmailRouteActivated(): boolean {

@@ -1,16 +1,17 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
 import { EmailCardService } from '../../state/email-card';
 import { SavedCardQuery, SavedCardService } from '../../state/saved-card';
 import { LocationQuery, LocationService } from 'src/app/features/location/state';
 import { Email, EmailService } from '../../state/email';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'ed-email-nav-drawer',
   templateUrl: './email-nav-drawer.component.html',
   styleUrls: ['./email-nav-drawer.component.scss']
 })
-export class EmailNavDrawerComponent implements OnInit {
+export class EmailNavDrawerComponent implements OnInit, OnDestroy {
   defaultCards = [
     {
       id: 1,
@@ -52,6 +53,9 @@ export class EmailNavDrawerComponent implements OnInit {
   locations$ = this.locationQuery.selectAll();
   selectedLocationId$ = this.locationQuery.selectActiveId();
   savedCards$ = this.savedCardQuery.selectAll();
+
+  public updateName = new Subject<string>();
+
   constructor(
     private emailService: EmailService,
     private emailCardService: EmailCardService,
@@ -59,13 +63,24 @@ export class EmailNavDrawerComponent implements OnInit {
     private savedCardService: SavedCardService,
     private locationQuery: LocationQuery,
     private locationService: LocationService,
-  ) { }
+  ) {
+    this.updateName.pipe(
+      debounceTime(1000),
+    )
+    .subscribe(name => {
+      this.onNameChange(name);
+    });
+  }
 
   get sendDate() {
     return new Date(this.email.sendDate);
   }
 
   ngOnInit() {}
+
+  ngOnDestroy() {
+    this.updateName.unsubscribe();
+  }
 
   onStandardTileClick(options) {
     this.emailCardService.addCard(options, this.email);

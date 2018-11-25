@@ -4,7 +4,15 @@
 
 export const environment = {
   production: false,
-  hmr: true
+  hmr: true,
+  firebase: {
+    apiKey: 'AIzaSyBsd1HNt7mRwS2JB2_bRSCoVKseBt5jNWU',
+    authDomain: 'email-designer-5aa67.firebaseapp.com',
+    databaseURL: 'https://email-designer-5aa67.firebaseio.com',
+    projectId: 'email-designer-5aa67',
+    storageBucket: 'email-designer-5aa67.appspot.com',
+    messagingSenderId: '778482168820'
+  }
 };
 
 /*

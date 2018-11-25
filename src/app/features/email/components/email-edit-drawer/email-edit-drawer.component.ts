@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { EmailCard, EmailCardQuery, EmailCardService } from 'src/app/features/email/state/email-card';
 import { Observable, Subject } from 'rxjs';
 import { SavedCardService } from '../../state/saved-card';
+import { debounceTime } from 'rxjs/operators';
 
 interface ModifyFieldArgs {
   field: string;
@@ -35,6 +36,9 @@ export class EmailEditDrawerComponent implements OnInit {
     private savedCardService: SavedCardService,
   ) {
     this.updateField
+      .pipe(
+        debounceTime(1000),
+      )
       .subscribe(({field, value}: ModifyFieldArgs) => {
         if (field === 'text') {
           value = value.split('\n\n');
