@@ -1,7 +1,7 @@
 <div fxLayout="row nowrap" fxLayoutAlign="center center" class="search-bar" color="primary">
   <mat-form-field class="search-box" color="accent">
     <mat-label>Search Emails</mat-label>
-    <input matInput>
+    <input matInput [(ngModel)]="search">
   </mat-form-field>
   <button
     mat-button
@@ -16,6 +16,6 @@
 
 <div class="email-list">
   <mat-list role="list">
-    <ed-email-list-item *ngFor="let email of emails$ | async" [email]="email"></ed-email-list-item>
+    <ed-email-list-item *ngFor="let email of emails$ | async | searchFilter:search" [email]="email"></ed-email-list-item>
   </mat-list>
 </div>

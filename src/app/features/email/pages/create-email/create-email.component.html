@@ -23,13 +23,7 @@
 
   <mat-sidenav-content>
     <div
-      cdkDropList
-      #emailBuilder="cdkDropList"
-      [cdkDropListData]="currentComponents$ | async"
-      [cdkDropListConnectedTo]="[standardComponentList]"
-      (cdkDropListDropped)="drop($event)"
       class="email-builder-content"
-      
     >
       <div class="cf-banner">
         <img src="http://email.cityfirst.church/wp-content/uploads/2018/03/cfc-logo-white.png" alt="">

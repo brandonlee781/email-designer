@@ -1,9 +1,12 @@
+/* tslint:disable:max-line-length */
+
 import { Injectable } from '@angular/core';
 import { LocationQuery, Location } from '../../location/state';
 import { EmailCardQuery, EmailCard } from '../state/email-card';
 import { EmailQuery } from '../state/email';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject, Subject, throwError, of, timer } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { mergeMap, retry, map, retryWhen, tap, delayWhen } from 'rxjs/operators';
 
 export interface MinifierResponse {
   html: string;
@@ -42,11 +45,20 @@ export class GenerateHtmlService {
     const text = this.generateText(cards);
 
     this.http.post('http://localhost:3000', { html: html })
-      .subscribe((data: MinifierResponse) => {
-        this.html.next({
-          html: data.html.replace(/\\/g, ''),
-          text,
-        });
+      .subscribe({
+        next: (data: MinifierResponse) => {
+          this.html.next({
+            html: data.html.replace(/\\/g, ''),
+            text,
+          });
+        },
+        error: error => {
+          console.error(error);
+          this.html.next({
+            html: null,
+            text,
+          });
+        },
       });
   }
 
@@ -147,7 +159,9 @@ export class GenerateHtmlService {
                   <tbody>
                     <tr>
                       <th>
-                        <img width="100%" height="auto" src="${card.image}" pagespeed_url_hash="4186688614" onload="pagespeed.CriticalImages.checkImageForCriticality(this);">
+                        ${ card.link ? '<a href="' + card.link + '">' : '' }
+                          <img width="100%" height="auto" src="${card.image}" pagespeed_url_hash="4186688614" onload="pagespeed.CriticalImages.checkImageForCriticality(this);">
+                        ${ card.link ? '</a>' : '' }
                       </th>
                     </tr>
                   </tbody>
@@ -255,15 +269,12 @@ export class GenerateHtmlService {
                       <tbody>
                         <tr>
                           <th>
-    
                             <h5 class="text-center"><a href="https://${location.website}">${location.website}</a></h5>
-    
                           </th>
                         </tr>
                       </tbody>
                     </table>
                   </th>
-    
                 </tr>
               </tbody>
             </table>
@@ -272,7 +283,6 @@ export class GenerateHtmlService {
               <tbody>
                 <tr>
                   <td class="wrapper-inner">
-    
                     <table class="spacer">
                       <tbody>
                         <tr>
@@ -280,7 +290,6 @@ export class GenerateHtmlService {
                         </tr>
                       </tbody>
                     </table>
-    
                     <table id="social-links" class="row collapse">
                       <tbody>
                         <tr>
@@ -356,7 +365,6 @@ export class GenerateHtmlService {
                         </tr>
                       </tbody>
                     </table>
-    
                     <table class="spacer">
                       <tbody>
                         <tr>
@@ -364,7 +372,6 @@ export class GenerateHtmlService {
                         </tr>
                       </tbody>
                     </table>
-    
                     <table id="footer" class="row">
                       <tbody>
                         <tr>

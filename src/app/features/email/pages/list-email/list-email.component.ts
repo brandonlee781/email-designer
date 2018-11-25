@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { EmailQuery, EmailService } from '../../state/email';
 import { Router } from '@angular/router';
+import { filter, map } from 'rxjs/operators';
 
 @Component({
   selector: 'ed-list-email',
@@ -8,7 +9,12 @@ import { Router } from '@angular/router';
   styleUrls: ['./list-email.component.scss']
 })
 export class ListEmailComponent implements OnInit {
-  emails$ = this.emailQuery.selectAll();
+  search = '';
+  emails$ = this.emailQuery.selectAll().pipe(
+    map(emails => emails.filter(email => {
+      return email.name.toLowerCase().includes(this.search.toLowerCase());
+    })),
+  );
 
   constructor(
     private emailQuery: EmailQuery,

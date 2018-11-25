@@ -5,7 +5,7 @@
     fxLayout="row" fxLayoutAlign="flex-start center"
   >
     <span>{{ email.location.id | uppercase }}- </span>
-    <span>{{ email.name }}</span>
+    <span>{{ email.name | slice:0:24}}</span>
     <span class="caption">{{ email.sendDate }}</span>
   </a>
   <div class="email-actions" fxLayout="row">

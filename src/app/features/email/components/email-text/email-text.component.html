@@ -2,12 +2,12 @@
   <h4
     class="title"
     [ngStyle]="{ 'text-align': titleAlignment, 'text-transform': titleCase }"
-  >
-    {{ titleCase === 'none' ? title : title.toLowerCase() || 'Lorem Ipsum' }}
-  </h4>
+    [innerHtml]="titleCase === 'none' ? title : title.toLowerCase()"
+  ></h4>
   <h5
     *ngIf="subtitle"
     [ngStyle]="{ 'text-align': titleAlignment, 'text-transform': titleCase }"
+    class="subtitle"
   >
     {{ subtitle }}
   </h5>

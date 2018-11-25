@@ -1,16 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { DialogType, EmailQuery } from '../../state/email';
-import { LocationQuery } from 'src/app/features/location/state';
-import { EmailCardQuery } from '../../state/email-card';
-import { generateDocument } from './email-styles';
-
-import axios, { AxiosPromise } from 'axios';
-import cheerio, { Cheerio, CheerioStatic } from 'cheerio';
-import { juiceDocument } from 'juice';
-import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators';
+import { DialogType } from '../../state/email';
 import { GenerateHtmlService } from '../../services/generate-html.service';
 
 export interface DialogData {

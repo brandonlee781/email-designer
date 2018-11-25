@@ -21,6 +21,7 @@ import { EmailTextComponent } from './components/email-text/email-text.component
 import { CreateEmailComponent } from './pages/create-email/create-email.component';
 import { ListEmailComponent } from './pages/list-email/list-email.component';
 import { DetectLinksPipe } from './pipes/detect-links.pipe';
+import { SearchFilterPipe } from './pipes/search-filter.pipe';
 
 @NgModule({
   imports: [
@@ -47,6 +48,7 @@ import { DetectLinksPipe } from './pipes/detect-links.pipe';
     EmailListItemComponent,
     EmailSpeedDialComponent,
     EmailDialogComponent,
+    SearchFilterPipe,
   ],
   entryComponents: [ EmailDialogComponent ]
 })

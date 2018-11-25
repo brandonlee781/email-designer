@@ -30,6 +30,13 @@
         {{selectedCard.options && selectedCard.options.includes('text') ? 'visibility_off' : 'visibility'}}
       </mat-icon>
     </mat-form-field>
+    <mat-form-field class="full-width">
+      <input
+        matInput
+        placeholder="Subtitle"
+        [(ngModel)]="selectedCard.subtitle"
+        (keyup)="updateField.next({ field: 'subtitle', value: $event.target.value })">
+    </mat-form-field>
   
     <div class="row">
       <mat-form-field class="form-field">
@@ -68,7 +75,7 @@
         matInput
         placeholder="Card Text"
         [value]="selectedCard.text.join('\n\n')"
-        rows="4"
+        rows="8"
         (keyup)="updateField.next({ field: 'text', value: $event.target.value })"
       ></textarea>
       <button mat-button *ngIf="selectedCard.text" matSuffix mat-icon-button aria-label="Clear" (click)="updateField.next({ field: 'text', value: '' })">
@@ -113,26 +120,28 @@
     </mat-form-field>
   </div>
 
-  <div>
-    <b>Top Padding: </b><span>{{ selectedCard.paddingTop || 0 }}</span>
-    <mat-slider
-      class="full-width"
-      [value]="selectedCard.paddingTop"
-      min="0"
-      max="40"
-      (input)="updateField.next({ field: 'paddingTop', value: $event.value })"
-    ></mat-slider>
-  </div>
-
-  <div>
-    <b>Bottom Padding: </b><span>{{ selectedCard.paddingBottom || 0 }}</span>
-    <mat-slider
-      class="full-width"
-      [value]="selectedCard.paddingBottom"
-      min="0"
-      max="40"
-      (input)="updateField.next({ field: 'paddingBottom', value: $event.value })"
-    ></mat-slider>
+  <div fxLayout="row nowrap">
+    <div>
+      <b>Top Padding: </b><span>{{ selectedCard.paddingTop || 0 }}</span>
+      <mat-slider
+        class="full-width"
+        [value]="selectedCard.paddingTop"
+        min="0"
+        max="40"
+        (input)="updateField.next({ field: 'paddingTop', value: $event.value })"
+      ></mat-slider>
+    </div>
+  
+    <div>
+      <b>Bottom Padding: </b><span>{{ selectedCard.paddingBottom || 0 }}</span>
+      <mat-slider
+        class="full-width"
+        [value]="selectedCard.paddingBottom"
+        min="0"
+        max="40"
+        (input)="updateField.next({ field: 'paddingBottom', value: $event.value })"
+      ></mat-slider>
+    </div>
   </div>
 
   <mat-slide-toggle
