@@ -2,7 +2,7 @@
   [ngClass]="{ card: true, selected: (activeId$ |async) === component.id }"
   [ngStyle]="{ 'margin-bottom.px': component.marginBottom ? 16 : 0 }"
 >
-  <div class="card-body" (click)="onCardClick($event)">
+  <div class="card-body" (click)="screenSize !== 'mobile' ? onCardClick($event) : null">
     <div *ngIf="(activeId$ |async) === component.id" class="selected-icon">
       <button mat-fab flat color="white" class="mat-elevation-z0">
         <mat-icon color="primary">check</mat-icon>
@@ -15,13 +15,60 @@
       </button>
       <mat-menu #actionMenu="matMenu" xPosition="before">
         <div fxLayout="column">
-          <button mat-button color="primary" class="save-btn" (click)="onClickSave()">
-            <mat-icon aria-label="Save Card">save</mat-icon>
-            <span>Save Card</span>
+          <button
+            mat-button
+            color="accent"
+            class="edit-btn"
+            (click)="onClickEdit()"
+          >
+            <div fxLayout="row" fxLayoutAlign="space-between center">
+              <mat-icon aria-label="Edit Card">edit</mat-icon>
+              <span>Edit Card</span>
+            </div>
           </button>
-          <button mat-button color="warn" class="delete-btn" (click)="onClickDelete()">
-            <mat-icon aria-label="Delete Card">delete</mat-icon>
-            <span>Delete Card</span>
+          <button
+            mat-button
+            color="primary"
+            class="save-btn"
+            (click)="onClickSave()"
+          >
+            <div fxLayout="row" fxLayoutAlign="space-between center">
+              <mat-icon aria-label="Save Card">save</mat-icon>
+              <span>Save Card</span>
+            </div>
+          </button>
+
+          <button
+            mat-button
+            color="warn"
+            class="delete-btn"
+            (click)="onClickDelete()"
+          >
+            <div fxLayout="row" fxLayoutAlign="space-between center">
+              <mat-icon aria-label="Delete Card">delete</mat-icon>
+              <span>Delete Card</span>
+            </div>
+          </button>
+
+          <button
+            *ngIf="index > 0"
+            mat-button
+            class="move-btn"
+          >
+            <div fxLayout="row" fxLayoutAlign="space-between center">
+              <mat-icon aria-label="Move Card Down">arrow_upward</mat-icon>
+              <span>Move Up</span>
+            </div>
+          </button>
+
+          <button
+            mat-button
+            class="move-btn"
+          >
+            <div fxLayout="row" fxLayoutAlign="space-between center">
+              <mat-icon aria-label="Move Card Down">arrow_downward</mat-icon>
+              <span>Move Down</span>
+            </div>
           </button>
         </div>
       </mat-menu>

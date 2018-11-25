@@ -22,17 +22,16 @@
   </mat-sidenav>
 
   <mat-sidenav-content>
-    <div
-      class="email-builder-content"
-    >
+    <div class="email-builder-content">
       <div class="cf-banner">
         <img src="http://email.cityfirst.church/wp-content/uploads/2018/03/cfc-logo-white.png" alt="">
       </div>
       <div class="email-builder-list">
         <ed-email-card
           *ngFor="let comp of currentComponents$ | async; index as i;"
-          cdkDrag
           [component]="comp"
+          [index]="i"
+          [screenSize]="screenSize"
         ></ed-email-card>
         <ed-email-footer-card [location]="(email$ | async).location"></ed-email-footer-card>
       </div>

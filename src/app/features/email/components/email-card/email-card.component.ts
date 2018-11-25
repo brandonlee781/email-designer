@@ -3,6 +3,7 @@ import { EmailCard, EmailCardService, EmailCardQuery } from '../../state/email-c
 import { ID } from '@datorama/akita';
 import { Observable } from 'rxjs';
 import { SavedCardService } from '../../state/saved-card';
+import { ScreenSize } from '../../services/breakpoint.service';
 
 @Component({
   selector: 'ed-email-card',
@@ -11,6 +12,8 @@ import { SavedCardService } from '../../state/saved-card';
 })
 export class EmailCardComponent implements OnInit {
   @Input() component: EmailCard;
+  @Input() index: number;
+  @Input() screenSize: ScreenSize;
   activeId$: Observable<ID> = this.emailQuery.selectActiveId();
 
   constructor(
@@ -35,6 +38,10 @@ export class EmailCardComponent implements OnInit {
 
   onClickSave() {
     this.savedCardService.saveCard(this.component);
+  }
+
+  onClickEdit() {
+    this.emailCardService.selectCard(this.component.id);
   }
 
 }
