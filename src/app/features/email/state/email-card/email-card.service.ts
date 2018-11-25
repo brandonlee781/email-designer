@@ -77,7 +77,7 @@ export class EmailCardService {
       .catch(err => console.error(err));
   }
 
-  updateNavDrawer(state) {
+  updateNavDrawer(state?: boolean): void {
     if (state !== undefined) {
       this.emailCardStore.updateNavDrawer(state);
     } else {

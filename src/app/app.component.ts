@@ -11,16 +11,17 @@ import { AuthenticationService } from './core/auth/services/authentication.servi
 })
 export class AppComponent {
   title = 'EmailDesigner';
+  darkTheme = false;
   user$ = this.authService.user;
 
   constructor(
-    private emailService: EmailCardService,
+    private emailCardService: EmailCardService,
     private location: Location,
     private authService: AuthenticationService,
   ) {}
 
   toggleNavDrawer() {
-    this.emailService.updateNavDrawer(undefined);
+    this.emailCardService.updateNavDrawer();
   }
 
   isEmailRouteActivated(): boolean {
