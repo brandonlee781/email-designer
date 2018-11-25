@@ -1,0 +1,24 @@
+@import '~@angular/material/theming';
+@import 'variables';
+@include mat-core();
+
+$email-app-primary: mat-palette($mat-blue, 700);
+$email-app-accent:  mat-palette($mat-orange, A200, A100, A400);
+$email-app-warn:    mat-palette($mat-red);
+$email-app-theme: mat-light-theme($email-app-primary, $email-app-accent, $email-app-warn);
+
+$dark-primary: mat-palette($mat-blue-grey);
+$dark-accent:  mat-palette($mat-amber, A200, A100, A400);
+$dark-warn:    mat-palette($mat-deep-orange);
+$dark-theme:   mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
+
+@include angular-material-theme($email-app-theme);
+
+@include email-theme($email-app-theme);
+
+.email-dark-theme {
+  @include angular-material-theme($dark-theme);
+  @include email-theme($dark-theme);
+  background-color: #303030;
+  color: white;
+}

@@ -1,9 +1,9 @@
-<div class="header">
+<div class="header email-theme">
   {{ header }}
 </div>
 
 <div class="content">
-  <mat-form-field class="text-area">
+  <mat-form-field *ngIf="showTextArea" class="text-area">
     <textarea matInput rows="8" [value]="content"></textarea>
   </mat-form-field>
 </div>
@@ -11,7 +11,7 @@
 <div class="actions" fxLayout="row" fxLayoutAlign="flex-end center">
   <button
     mat-button
-    [ngClass]="{ primary: !copySuccess, success: copySuccess, warn: copyError }"
+    [ngClass]="{ 'email-text': !copySuccess, success: copySuccess, warn: copyError }"
     ngxClipboard
     [cbContent]="content"
     (cbOnSuccess)="copySuccess = true"

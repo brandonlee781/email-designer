@@ -4,7 +4,6 @@
   height: 40px;
   padding: 16px;
   color: #fff;
-  background-color: $primary;
   font-size: 32px;
 }
 
@@ -21,11 +20,6 @@
   padding: 0 16px 16px 16px;
 }
 
-.primary {
-  color: $primary;
-  // background: $primary;
-}
-
 .success {
   color: #fff;
   background: #00992e;
@@ -33,5 +27,5 @@
 
 .warn {
   color: #fff !important;
-  background: $warn !important;
+  background: red !important;
 }
