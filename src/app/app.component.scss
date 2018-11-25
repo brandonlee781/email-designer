@@ -6,8 +6,22 @@
   width: 100%;
   z-index: 2;
 }
+
+.home-btn {
+  cursor: pointer;
+
+  .mat-icon {
+    display: none;
+    // margin-right: 8px;
+  }
+
+  &:hover .mat-icon {
+    display: flex;
+  }
+}
+
 .app-content {
-  min-height: calc(100vh - 64px);
+  min-height: 100vh;
   height: 100%;
   margin-top: 64px;
 }

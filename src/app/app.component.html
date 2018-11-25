@@ -1,33 +1,38 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<mat-toolbar color="primary" class="app-toolbar">
-  <button
-    *ngIf="isEmailRouteActivated()"
-    mat-icon-button
-    (click)="toggleNavDrawer()"
-  >
-    <mat-icon>menu</mat-icon>
-  </button>
-
-  <span>Email Designer</span>
-
-  <span class="spacer"></span>
-
-  <button mat-flat-button color="primary" routerLink="/">
-    <span>Home</span>
-    <mat-icon>home</mat-icon>
-  </button>
+<div [ngClass]="{ 'email-dark-theme': darkTheme }">
+  <mat-toolbar color="primary" class="app-toolbar">
+    <button
+      *ngIf="isEmailRouteActivated()"
+      mat-icon-button
+      (click)="toggleNavDrawer()"
+    >
+      <mat-icon>menu</mat-icon>
+    </button>
   
-  <button *ngIf="(user$ | async)?.uid" class="profile" mat-mini-fab [matMenuTriggerFor]="profileMenu">
-    <img [src]="(user$ |async)?.photoURL" alt="">
-  </button>
+    <span
+      class="home-btn"
+      routerLink="/"
+      fxLayout="row" fxLayoutAlign="space-between center"
+    >
+      <mat-icon>home</mat-icon>
+      Email Designer
+    </span>
+  
+    <span class="spacer"></span>
+  
+    <button *ngIf="(user$ | async)?.uid" class="profile" mat-mini-fab [matMenuTriggerFor]="profileMenu">
+      <img [src]="(user$ |async)?.photoURL" alt="">
+    </button>
+  
+    <mat-menu #profileMenu="matMenu">
+      <button mat-menu-item (click)="authService.signOut()">Log Out</button>
+    </mat-menu>
+      
+  </mat-toolbar>
+  
+  <div class="app-content">
+    <router-outlet></router-outlet>
+  </div>
 
-  <mat-menu #profileMenu="matMenu">
-    <button mat-menu-item (click)="authService.signOut()">Log Out</button>
-  </mat-menu>
-    
-</mat-toolbar>
-
-<div class="app-content">
-  <router-outlet></router-outlet>
 </div>
 
