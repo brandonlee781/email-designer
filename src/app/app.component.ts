@@ -17,7 +17,7 @@ export class AppComponent {
   constructor(
     private emailCardService: EmailCardService,
     private location: Location,
-    private authService: AuthenticationService,
+    public authService: AuthenticationService,
   ) {}
 
   toggleNavDrawer() {
