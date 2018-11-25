@@ -1,21 +1,23 @@
-<div fxLayout="row nowrap" fxLayoutAlign="center center" class="search-bar" color="primary">
-  <mat-form-field class="search-box" color="accent">
-    <mat-label>Search Emails</mat-label>
-    <input matInput [(ngModel)]="search">
-  </mat-form-field>
-  <button
-    mat-button
-    color="white"
-    class="new-email-btn"
-    (click)="onCreateClick()"
-  >
-    <mat-icon color="white">add</mat-icon>
-    New Email
-  </button>
-</div>
-
-<div class="email-list">
-  <mat-list role="list">
-    <ed-email-list-item *ngFor="let email of emails$ | async | searchFilter:search" [email]="email"></ed-email-list-item>
-  </mat-list>
+<div class="wrapper">
+  <div fxLayout="row nowrap" fxLayoutAlign="center center" class="search-bar email-theme">
+    <mat-form-field class="search-box" color="accent">
+      <mat-label>Search Emails</mat-label>
+      <input matInput [(ngModel)]="search">
+    </mat-form-field>
+    <button
+      mat-button
+      color="white"
+      class="new-email-btn"
+      (click)="onCreateClick()"
+    >
+      <mat-icon color="white">add</mat-icon>
+      New Email
+    </button>
+  </div>
+  
+  <div class="email-list">
+    <mat-list role="list">
+      <ed-email-list-item *ngFor="let email of emails$ | async | searchFilter:search" [email]="email"></ed-email-list-item>
+    </mat-list>
+  </div>
 </div>
